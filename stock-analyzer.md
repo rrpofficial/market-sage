@@ -21,6 +21,25 @@ triggers:
 
 # Stock Analyzer — Deep Equity Research
 
+---
+
+## ⛔ DATA INTEGRITY PRE-FLIGHT CHECK — RUN BEFORE EVERY ANALYSIS
+
+**Before writing a single financial figure**, complete this check:
+
+| Check | Condition | Action |
+|-------|-----------|--------|
+| 1. Web tools available? | YES → proceed to Step 1 below | NO → tell user, present data checklist (see market-sage.md) |
+| 2. Did fetch return data? | YES → use it, cite source + date | NO → mark field `[FETCH REQUIRED — verify at {URL}]` |
+| 3. About to write a number from training memory? | ANY CASE → **STOP. Delete it. Fetch it first.** | There is no scenario where training memory is acceptable. |
+
+**Forbidden sources for financial data**: LLM training knowledge, cached reasoning, "I recall that...", "approximately...", "historically around...".
+**Required sources**: WebSearch + WebFetch returning live data from Screener.in, NSE, BSE, Trendlyne, Moneycontrol, or equivalent live portals.
+
+This pre-flight check applies to: stock prices, P/E, P/B, EV/EBITDA, revenue, profit, EPS, FCF, ROE, ROCE, margins, debt ratios, shareholding %, dividends, technical indicator values, and every other quantitative metric.
+
+---
+
 ## Activation
 
 When the user asks about a specific Indian stock, company analysis, IPO evaluation, or dividend stock selection. For stock comparisons, run the framework for each stock and add a comparative section.
@@ -42,16 +61,20 @@ Before ANY analysis, fetch real data. Use this fallback sequence if a source is 
 - **Operational**: WebSearch `"{Company} tijori finance"` for revenue segments, geographic mix, operational metrics
 - **News/Red flags**: WebSearch `"{Company} tax dispute litigation fraud SEBI penalty {current year}"`
 
-**If ALL sources fail**: Present the analysis template with blanks and ask user:
+**If ALL sources fail**: Do NOT fill any figures from LLM training knowledge. Tell the user and present the data checklist:
 ```
-I couldn't fetch live data. Please provide from Screener.in ({Company}):
+I couldn't fetch live data from any source. I will not estimate figures from my training data
+— those are stale and could mislead you into a wrong decision.
+
+Please paste the following from Screener.in ({Company}):
+□ Current price, 52-week high/low
 □ Key ratios: ROE, ROCE, P/E, P/B, Debt/Equity
 □ 5Y Revenue and Profit CAGR
 □ Shareholding: Promoter/FII/DII/MF %, Promoter pledge %
-□ Current price, 52-week high/low
 □ Last 5 years annual Revenue, PAT, EPS
 □ Peer comparison (3-4 peers)
 ```
+All table cells in the analysis will show `[FETCH REQUIRED]` until the user provides the data.
 
 ## Step 2: Corporate Governance Analysis (DO THIS FIRST)
 

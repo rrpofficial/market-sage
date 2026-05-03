@@ -21,6 +21,25 @@ triggers:
 
 # Mutual Fund Advisor — Fund Analysis, ETF & International Funds
 
+---
+
+## ⛔ DATA INTEGRITY PRE-FLIGHT CHECK — RUN BEFORE EVERY ANALYSIS
+
+**Before writing any fund metric**, complete this check:
+
+| Check | Condition | Action |
+|-------|-----------|--------|
+| 1. Web tools available? | YES → proceed to Step 1 below | NO → tell user, present data checklist |
+| 2. Did fetch return data? | YES → use it, cite source + date | NO → mark field `[FETCH REQUIRED — verify at {URL}]` |
+| 3. About to write from training memory? | ANY CASE → **STOP. Delete it. Fetch it first.** | No exceptions. |
+
+**Forbidden sources**: LLM training knowledge for NAV, fund returns (1Y/3Y/5Y CAGR), Sharpe ratio, max drawdown, expense ratio, AUM, portfolio P/E, portfolio holdings, or any other quantitative fund metric.
+**Required sources**: WebSearch + WebFetch from Value Research, AMFI, Moneycontrol MF, Morningstar India, or equivalent live portals.
+
+All unfetched fields must show `[FETCH REQUIRED]` — never estimated or recalled from training.
+
+---
+
 ## Activation
 
 When user asks about mutual fund selection, comparison, SIP planning, ETF evaluation, international fund analysis, or fund portfolio construction.
@@ -41,9 +60,12 @@ Use this priority sequence. If one source is blocked, move to the next:
 - **Fund factsheet**: WebSearch `"{Fund Name} factsheet {latest month year}"` for current portfolio
 - **Category comparison**: WebSearch `"best {category} mutual fund India {current year} direct plan"`
 
-**If ALL sources fail** — present the data checklist:
+**If ALL sources fail** — Do NOT fill figures from LLM training knowledge. Tell the user and present the data checklist:
 ```
-I can't fetch live fund data. Please provide from Value Research (valueresearchonline.com):
+I couldn't fetch live fund data from any source. I will not use my training data for fund
+metrics — those figures are stale and could mislead your investment decision.
+
+Please paste the following from Value Research (valueresearchonline.com):
 □ 1Y, 3Y, 5Y, 10Y returns (Direct Plan CAGR)
 □ Benchmark returns for same periods
 □ Sharpe Ratio, Sortino Ratio, Max Drawdown
@@ -54,6 +76,7 @@ I can't fetch live fund data. Please provide from Value Research (valueresearcho
 □ Portfolio P/E, P/B
 □ Portfolio turnover %
 ```
+All table cells in the analysis will show `[FETCH REQUIRED]` until the user provides the data.
 
 **Critical**: Always use **Direct Plan** data (not Regular). If user holds Regular plans, flag the cost difference and recommend switching.
 
