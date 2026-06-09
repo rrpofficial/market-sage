@@ -1,1 +1,19 @@
+# Personal/sensitive files
 supporting-files/
+input_files/
+
+# Python virtual environment
+.venv/
+
+# Python bytecode
+__pycache__/
+*.pyc
+*.pyo
+
+# Build artifacts
+*.egg-info/
+dist/
+build/
+
+# Local Claude Code settings
+.claude/
