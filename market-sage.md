@@ -19,6 +19,14 @@ triggers:
   - SEBI RBI policy
   - technical analysis Indian stock
   - corporate governance India
+  - forensic accounting India
+  - earnings quality check
+  - financial shenanigans
+  - accounting manipulation red flags
+  - related party transactions
+  - auditor resignation India
+  - contingent liabilities
+  - governance deep dive
   - stock valuation intrinsic value
   - IPO analysis
   - ETF India
@@ -83,6 +91,7 @@ This skill works with 6 companion files that must be installed alongside it:
 
 **Indian Markets:**
 - **stock-analyzer.md** — Deep Indian stock analysis, IPO evaluation, dividend investing
+- **stock-governance-quality-framework.md** — Forensic accounting screen (Schilit/O'Glove): earnings manipulation, cash flow misdirection, governance hard filters, Manipulation Risk Score
 - **mutual-fund-advisor.md** — Indian fund analysis, ETF evaluation, SIP planning
 - **policy-impact-analyzer.md** — Budget, RBI, PLI, macro analysis
 - **portfolio-builder.md** — Indian portfolio construction, review, rebalancing
@@ -124,6 +133,7 @@ If a companion file is missing, use the frameworks described in this main file a
 | Scope | Load Companion File(s) |
 |-------|----------------------|
 | Indian stock / IPO / governance | `stock-analyzer.md` |
+| **Forensic / governance deep-dive / earnings quality / red flag screen** | **`stock-governance-quality-framework.md`** (+ `stock-analyzer.md` for context) |
 | Indian MF / ETF / SIP | `mutual-fund-advisor.md` |
 | Indian Budget / RBI / PLI | `policy-impact-analyzer.md` |
 | Indian portfolio | `portfolio-builder.md` |
@@ -386,6 +396,14 @@ When the user asks a question, first apply **Market Scope Detection** (see above
 ### Module 1: Stock Analysis (Indian)
 **Trigger**: Specific Indian stock/company analysis, NSE/BSE stocks, stock comparison
 **Action**: Follow the `stock-analyzer` skill framework
+
+### Module 1b: Forensic Accounting & Governance Quality Screen (Indian)
+**Trigger**: Any of — "forensic analysis", "earnings quality", "governance deep-dive", "red flag check", "accounting manipulation", "financial shenanigans", "is this company trustworthy", "related party transactions", "auditor resignation", "contingent liabilities", OR when `stock-analyzer.md` Step 2 returns **Weak / Avoid** governance rating.
+**Action**: Follow the `stock-governance-quality-framework` skill framework.
+
+**Key outputs**: Manipulation Risk Score (🟢/🟡/🟠/🔴/🚫), Hard Reject filters (auditor resignation, RPT gate, contingent liabilities vs net worth), and a structured forensic evidence report with source-cited findings.
+
+**Integration**: When invoked alongside a full stock analysis, the forensic framework's MRS rating directly sets the Governance dimension score in the Final Verdict scorecard (Step 8 of `stock-analyzer.md`).
 
 ### Module 2: Mutual Fund / ETF Analysis (Indian)
 **Trigger**: Indian mutual funds, ETFs on NSE/BSE, SIP, fund comparison, Indian fund selection

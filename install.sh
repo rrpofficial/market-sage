@@ -9,17 +9,18 @@
 #   ./install.sh --modules "stock mf"  — install specific modules by name
 #   ./install.sh --project /path        — install to a project instead of globally
 #
-# Module names: stock, mf (mutual funds), policy, portfolio, us-stock, us-fund
+# Module names: stock, forensic, mf (mutual funds), policy, portfolio, us-stock, us-fund
 #
 # Context footprint by combination:
 #   core only                               ~400 lines
 #   core + stock + policy                   ~1500 lines (Indian stock analysts)
+#   core + stock + forensic + policy        ~1900 lines (Indian stock with forensic screen)
 #   core + mf + portfolio                   ~1200 lines (Indian fund/portfolio investors)
 #   core + mf + portfolio + policy          ~1500 lines (Indian fund investors with policy context)
 #   core + us-stock                         ~1000 lines (US stock analysts)
 #   core + us-fund                          ~700 lines (US ETF/fund investors)
 #   core + us-stock + us-fund               ~1300 lines (full US coverage)
-#   all modules                             ~3600 lines (full install — all markets)
+#   all modules                             ~4300 lines (full install — all markets)
 
 set -e
 
@@ -29,6 +30,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CORE_FILE="market-sage.md"
 declare -A MODULE_FILES=(
   [stock]="stock-analyzer.md"
+  [forensic]="stock-governance-quality-framework.md"
   [mf]="mutual-fund-advisor.md"
   [policy]="policy-impact-analyzer.md"
   [portfolio]="portfolio-builder.md"
@@ -37,6 +39,7 @@ declare -A MODULE_FILES=(
 )
 declare -A MODULE_LABELS=(
   [stock]="Stock Analyzer (IN)   (Indian: fundamentals, technical, IPO, governance) — ~750 lines"
+  [forensic]="Forensic Framework (IN)(Indian: earnings manipulation, cash flow quality, governance hard filters, MRS) — ~690 lines"
   [mf]="Fund Advisor (IN)      (Indian: funds, ETFs, SIP, international)           — ~500 lines"
   [policy]="Policy Analyzer (IN) (Indian: budget, RBI, PLI, macro impact)            — ~270 lines"
   [portfolio]="Portfolio Builder (IN)(Indian: asset allocation, review, tax, income)   — ~520 lines"
@@ -94,7 +97,7 @@ if [ "$INSTALL_MODE" = "interactive" ]; then
   echo ""
   echo "Available modules:"
   echo ""
-  for key in stock mf policy portfolio us-stock us-fund; do
+  for key in stock forensic mf policy portfolio us-stock us-fund; do
     echo "  [$key] ${MODULE_LABELS[$key]}"
   done
   echo ""
@@ -102,32 +105,37 @@ if [ "$INSTALL_MODE" = "interactive" ]; then
   echo "  [1] Indian stock analyst — core + stock + policy (~1500 lines)"
   echo "      (Policy is essential: budget capex, PLI schemes, RBI rate direction)"
   echo ""
-  echo "  [2] Indian fund investor — core + mf + portfolio + policy (~1500 lines)"
+  echo "  [2] Indian stock analyst (with forensic) — core + stock + forensic + policy (~1900 lines)"
+  echo "      (Adds Schilit/O'Glove earnings quality screen and governance hard filters)"
+  echo ""
+  echo "  [3] Indian fund investor — core + mf + portfolio + policy (~1500 lines)"
   echo "      (Policy context needed for sector rotation and fund category impact)"
   echo ""
-  echo "  [3] US investor          — core + us-stock + us-fund (~1300 lines)"
+  echo "  [4] US investor          — core + us-stock + us-fund (~1300 lines)"
   echo "      (Full US market coverage: stocks, ETFs, MFs, 401k/IRA)"
   echo ""
-  echo "  [4] Full install (both markets) — all modules (~3600 lines)"
+  echo "  [5] Full install (both markets) — all modules (~4000 lines)"
   echo "      (For users who analyse Indian AND US stocks, funds, and portfolios)"
   echo ""
-  echo "  [5] Custom               — pick specific modules"
+  echo "  [6] Custom               — pick specific modules"
   echo ""
-  read -rp "Enter preset [1-5] or press Enter for full install: " choice
+  read -rp "Enter preset [1-6] or press Enter for full install: " choice
 
   case "$choice" in
     1)
       SELECTED_MODULES=(stock policy) ;;
     2)
-      SELECTED_MODULES=(mf portfolio policy) ;;
+      SELECTED_MODULES=(stock forensic policy) ;;
     3)
+      SELECTED_MODULES=(mf portfolio policy) ;;
+    4)
       SELECTED_MODULES=(us-stock us-fund) ;;
-    4|"")
+    5|"")
       INSTALL_MODE="all" ;;
-    5)
+    6)
       echo ""
-      echo "Enter module names separated by spaces (stock mf policy portfolio us-stock us-fund):"
-      echo "NOTE: For Indian stocks, policy is strongly recommended. For US, us-fund adds ETF/401k context."
+      echo "Enter module names separated by spaces (stock forensic mf policy portfolio us-stock us-fund):"
+      echo "NOTE: For Indian stocks, policy is strongly recommended. forensic adds earnings quality screen."
       read -rp "> " custom_input
       IFS=' ' read -ra SELECTED_MODULES <<< "$custom_input"
       INSTALL_MODE="manual" ;;
@@ -142,10 +150,10 @@ FILES_TO_INSTALL=("$CORE_FILE")
 TOTAL_LINES=299  # core file lines
 
 if [ "$INSTALL_MODE" = "all" ]; then
-  for key in stock mf policy portfolio us-stock us-fund; do
+  for key in stock forensic mf policy portfolio us-stock us-fund; do
     FILES_TO_INSTALL+=("${MODULE_FILES[$key]}")
   done
-  TOTAL_LINES=3600
+  TOTAL_LINES=4000
 elif [ "$INSTALL_MODE" = "minimal" ]; then
   # core + stock + policy: policy is required for proper long-term stock analysis
   FILES_TO_INSTALL+=("${MODULE_FILES[stock]}" "${MODULE_FILES[policy]}")
@@ -252,6 +260,7 @@ Read the core skill file first, then load the relevant companion file(s). Do not
 
 **For Indian market queries:**
 - Indian stock / IPO / technical / governance → `~/.claude/skills/stock-analyzer.md`
+- Forensic accounting / governance deep-dive / earnings quality / red flag check → `~/.claude/skills/stock-governance-quality-framework.md` (also read stock-analyzer.md)
 - Indian mutual fund / SIP / ETF / NAV → `~/.claude/skills/mutual-fund-advisor.md`
 - Indian portfolio construction / review / rebalancing → `~/.claude/skills/portfolio-builder.md`
 - Indian budget / RBI / PLI / SEBI / macro impact → `~/.claude/skills/policy-impact-analyzer.md`
@@ -325,6 +334,7 @@ Invoke via \`uv run --project ~/.claude/market-sage-tools <tool> [args]\`.
 | ms-technicals | \`ms-technicals SYMBOL [--period 1y] [--pretty]\` | DMA 20/50/200, RSI, MACD, Bollinger, S/R, verdict |
 | ms-dcf | \`ms-dcf --symbol X --price P --fcf F --growth G [--shares S] [--eps E] [--book B] [--pe-fair PE] [--pretty]\` | DCF, Graham Number, PE-based, Reverse DCF (India defaults: --discount 13 --terminal 5) |
 | ms-nav | \`ms-nav QUERY [--scheme-code CODE] [--list-matches] [--pretty]\` | AMFI NAV lookup by fund name or scheme code |
+| ms-forensic | \`ms-forensic SYMBOL [--years 5] [--standalone] [--pretty]\` | Forensic screen: DSO divergence, DIO-margin decoupling, CWIP aging, CFO/PAT (O'Glove), DPO inflation — preliminary MRS |
 
 ### US Market Tools
 | Tool | Invocation | What it does |
@@ -380,6 +390,8 @@ echo '  "Build a portfolio for ₹10 lakhs with moderate risk"'
 echo '  "Compare HDFC Bank vs ICICI Bank"'
 echo '  "Best mutual funds for 10-year SIP"'
 echo '  "How will the defence budget affect HAL and BEL?"'
+echo '  "Run a forensic accounting check on [Company] — any earnings quality red flags?"'
+echo '  "What is the governance quality score for [Company]? Check auditor, RPTs, contingent liabilities."'
 echo ""
 echo "  US markets:"
 echo '  "Analyze Apple stock (AAPL)"'
