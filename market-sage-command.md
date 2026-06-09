@@ -46,6 +46,7 @@ Read the core skill file first, then load the relevant companion file(s). Do not
 
 **For Indian market queries — read based on query type:**
 - Indian stock / IPO / technical / governance → `~/.claude/skills/stock-analyzer.md`
+- Forensic accounting / governance deep-dive / earnings quality / red flag check / accounting manipulation → `~/.claude/skills/stock-governance-quality-framework.md` (also read `stock-analyzer.md` for context)
 - Indian mutual fund / SIP / ETF / NAV → `~/.claude/skills/mutual-fund-advisor.md`
 - Indian portfolio construction / review / rebalancing → `~/.claude/skills/portfolio-builder.md`
 - Indian budget / RBI / PLI / SEBI / macro impact → `~/.claude/skills/policy-impact-analyzer.md`
@@ -134,6 +135,7 @@ Invoke via `uv run --project ~/.claude/market-sage-tools <tool> [args]`.
 | ms-technicals | `uv run --project ~/.claude/market-sage-tools ms-technicals SYMBOL [--period 1y] [--pretty]` | DMA 20/50/200, RSI, MACD, Bollinger, ATR, S/R, verdict |
 | ms-dcf | `uv run --project ~/.claude/market-sage-tools ms-dcf --symbol X --price P --fcf F --growth G [--shares S] [--eps E] [--book B] [--pe-fair PE] [--pretty]` | DCF, Graham Number, PE-based, Reverse DCF |
 | ms-nav | `uv run --project ~/.claude/market-sage-tools ms-nav QUERY [--scheme-code CODE] [--list-matches] [--pretty]` | AMFI NAV lookup by fund name or scheme code |
+| ms-forensic | `uv run --project ~/.claude/market-sage-tools ms-forensic SYMBOL [--years 5] [--standalone] [--pretty]` | Forensic accounting screen: auto-computes DSO divergence, DIO-margin decoupling, CWIP aging, CFO/PAT (O'Glove test), DPO inflation — outputs preliminary MRS and lists manual checks required |
 
 ### US Market Tools
 

@@ -23,6 +23,7 @@ ms-nav           = "market_sage.mf_nav:app"
 ms-us-quotes     = "market_sage.us_quotes:app"
 ms-us-technicals = "market_sage.us_technicals:app"
 ms-us-etf        = "market_sage.us_etf:app"
+ms-forensic      = "market_sage.forensic:app"
 
 [build-system]
 requires = ["hatchling"]

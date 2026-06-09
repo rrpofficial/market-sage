@@ -80,6 +80,8 @@ All table cells in the analysis will show `[FETCH REQUIRED]` until the user prov
 
 **This section is NON-NEGOTIABLE and must appear BEFORE financial analysis.** Poor governance invalidates all financial metrics.
 
+**Forensic Escalation Rule**: If Step 2 results in a governance rating of **Weak** or **Avoid**, OR if the user has explicitly requested a governance deep-dive or red flag screen, **stop this analysis and switch to `stock-governance-quality-framework.md`**. That skill runs a complete forensic accounting screen (earnings manipulation, cash flow misdirection, RPT gate, auditor integrity, contingent liabilities) and produces a Manipulation Risk Score (MRS) that feeds back into Step 8's governance score. The forensic framework is also automatically applicable for any company with: active SEBI orders, promoter pledge >10%, recent auditor change, acquisition-heavy growth, or rapid unexplained margin expansion.
+
 ### 2.1 Board & Management Structure
 
 | Aspect | Finding | Red Flag? |
@@ -389,6 +391,13 @@ Note any visible patterns from Trendlyne/Chartink/Investing.com:
 | Corporate Governance | | 15% | |
 | Technical Setup | | 10% | |
 | **Total** | | **100%** | **/10** |
+
+**Corporate Governance score mapping from Forensic MRS** (if `stock-governance-quality-framework.md` was run):
+- 🟢 GREEN (no flags) → 8-10/10
+- 🟡 AMBER (1-2 caution flags) → 5-7/10
+- 🟠 ORANGE (any Red flag OR 3+ Amber) → 2-4/10; total score **capped at 6/10**
+- 🔴 RED (2+ Red flags) → 0-1/10; verdict forced to **AVOID**
+- 🚫 HARD REJECT → verdict forced to **AVOID — DO NOT INVEST**; skip all other scoring
 
 **Score interpretation**: >7.5 = Strong BUY, 6-7.5 = BUY/HOLD, 4.5-6 = HOLD, <4.5 = AVOID
 
