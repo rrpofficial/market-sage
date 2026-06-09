@@ -1,7 +1,7 @@
 # Personal/sensitive files
 supporting-files/
-input_files/
-
+input_files/*                                                                                                                                                                 
+!input_files/.gitkeep   
 # Python virtual environment
 .venv/
 
