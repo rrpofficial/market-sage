@@ -11,19 +11,26 @@ dependencies = [
     "polars>=1.0.0",
     "rich>=13.7.0",
     "typer>=0.12.0",
+    "nsepython>=2.2",
 ]
 
 [project.scripts]
-ms-screener      = "market_sage.screener:app"
-ms-quotes        = "market_sage.quotes:app"
-ms-portfolio     = "market_sage.portfolio:app"
-ms-dcf           = "market_sage.dcf:app"
-ms-technicals    = "market_sage.technicals:app"
-ms-nav           = "market_sage.mf_nav:app"
-ms-us-quotes     = "market_sage.us_quotes:app"
-ms-us-technicals = "market_sage.us_technicals:app"
-ms-us-etf        = "market_sage.us_etf:app"
-ms-forensic      = "market_sage.forensic:app"
+ms-screener          = "market_sage.screener:app"
+ms-quotes            = "market_sage.quotes:app"
+ms-portfolio         = "market_sage.portfolio:app"
+ms-dcf               = "market_sage.dcf:app"
+ms-technicals        = "market_sage.technicals:app"
+ms-nav               = "market_sage.mf_nav:app"
+ms-us-quotes         = "market_sage.us_quotes:app"
+ms-us-technicals     = "market_sage.us_technicals:app"
+ms-us-etf            = "market_sage.us_etf:app"
+ms-forensic          = "market_sage.forensic:app"
+ms-momentum-score    = "market_sage.momentum_score:app"
+ms-rs-rank           = "market_sage.rs_rank:app"
+ms-breadth           = "market_sage.breadth:app"
+ms-sector-rs         = "market_sage.sector_rs:app"
+ms-volume-profile    = "market_sage.volume_profile:app"
+ms-momentum-screen   = "market_sage.momentum_screen:app"
 
 [build-system]
 requires = ["hatchling"]
