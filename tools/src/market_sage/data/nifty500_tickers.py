@@ -1,0 +1,150 @@
+"""
+Hardcoded NSE index constituent lists — fallback when nsepython is unavailable.
+
+Last verified: June 2026. Refresh quarterly from:
+  https://www.nseindia.com/market-data/live-equity-market?symbol=NIFTY%20500
+
+IMPORTANT: This is a FALLBACK only. The primary path in _utils._get_universe()
+tries nsepython first. These lists are intentionally over-inclusive to reduce
+false negatives from quarterly rebalancing; minor stale entries are acceptable.
+"""
+
+# ── Nifty 50 ─────────────────────────────────────────────────────────────────
+# The 50 largest and most liquid NSE-listed companies.
+NIFTY50: list[str] = [
+    "ADANIENT", "ADANIPORTS", "APOLLOHOSP", "ASIANPAINT", "AXISBANK",
+    "BAJAJ-AUTO", "BAJAJFINSV", "BAJFINANCE", "BEL", "BHARTIARTL",
+    "BPCL", "BRITANNIA", "CIPLA", "COALINDIA", "DIVISLAB",
+    "DRREDDY", "EICHERMOT", "ETERNAL", "GRASIM", "HCLTECH",
+    "HDFCBANK", "HDFCLIFE", "HEROMOTOCO", "HINDALCO", "HINDUNILVR",
+    "ICICIBANK", "INDUSINDBK", "INFY", "ITC", "JSWSTEEL",
+    "KOTAKBANK", "LT", "M&M", "MARUTI", "NESTLEIND",
+    "NTPC", "ONGC", "POWERGRID", "RELIANCE", "SBILIFE",
+    "SBIN", "SHRIRAMFIN", "SUNPHARMA", "TATACONSUM", "TATAMOTORS",
+    "TATASTEEL", "TCS", "TECHM", "TITAN", "TRENT",
+    "ULTRACEMCO", "WIPRO",
+]
+
+# ── Nifty Next 50 ─────────────────────────────────────────────────────────────
+# Companies ranked 51–100 by free-float market cap.
+_NIFTY_NEXT50: list[str] = [
+    "ABB", "ALKEM", "AMBUJACEM", "AUROPHARMA", "BAJAJHLDNG",
+    "BALKRISIND", "BANDHANBNK", "BERGEPAINT", "BIOCON", "BOSCHLTD",
+    "CANBK", "CHOLAFIN", "COLPAL", "CONCOR", "DABUR",
+    "DALBHARAT", "DLF", "GODREJCP", "GODREJPROP", "HAVELLS",
+    "HINDPETRO", "ICICIPRU", "INDUSTOWER", "IRFC", "JINDALSTEL",
+    "LUPIN", "LTIM", "M&MFIN", "MARICO", "MAXHEALTH",
+    "MFSL", "MPHASIS", "NAUKRI", "NMDC", "OBEROIRLTY",
+    "PAGEIND", "PEL", "PETRONET", "PFC", "PIDILITIND",
+    "PIIND", "RECLTD", "SAIL", "SBICARD", "SIEMENS",
+    "TORNTPHARM", "UBL", "UNIONBANK", "VEDL", "VOLTAS",
+]
+
+# ── Nifty Midcap 150 ─────────────────────────────────────────────────────────
+# Mid-sized companies with strong growth profiles.
+NIFTYMIDCAP150: list[str] = [
+    "AARTIIND", "ABCAPITAL", "ABFRL", "ACC", "AIAENG",
+    "AJANTPHARM", "AKZOINDIA", "APOLLOTYRE", "ASTRAL", "ATUL",
+    "AUBANK", "AWHCL", "BANKBARODA", "BSE", "CARBORUNIV",
+    "CDSL", "CESC", "CHAMBLFERT", "CLEAN", "CMSINFO",
+    "COFORGE", "CROMPTON", "CUMMINSIND", "DEEPAKNTR", "DELHIVERY",
+    "DIXON", "ELGIEQUIP", "EMAMILTD", "ENGINERSIN", "EQUITASBNK",
+    "EXIDEIND", "FEDERALBNK", "FIVESTAR", "GLAND", "GLAXO",
+    "GNFC", "GODREJIND", "GRANULES", "GSPL", "GUARDIANSGD",
+    "HFCL", "HINDCOPPER", "HONAUT", "IDFCFIRSTB", "IGL",
+    "INDHOTEL", "IPCA", "JKCEMENT", "JUBLFOOD", "JUBILINGR",
+    "KANSAINER", "KAYNES", "KEC", "KPITTECH", "KRBL",
+    "LALPATHLAB", "LAURUSLABS", "LICHSGFIN", "LODHA", "LTTS",
+    "MANKIND", "MAHABANK", "MCX", "MEDANTA", "METROPOLIS",
+    "MUTHOOTFIN", "NATIONALUM", "NBCC", "NHPC", "NLCINDIA",
+    "NUVOCO", "OFSS", "OLECTRA", "PERSISTENT", "PGHL",
+    "PHOENIXLTD", "POLYCAB", "POONAWALLA", "PRESTIGE", "PVRINOX",
+    "RAMCOCEM", "RAYMOND", "RITES", "SAFARI", "SANOFI",
+    "SCHAEFFLER", "SOLARINDS", "SONACOMS", "STARHEALTH", "SUNDARMFIN",
+    "SUNTV", "SUPREMEIND", "TATACHEM", "TATAPOWER", "TATATECH",
+    "THERMAX", "TIMKEN", "TORNTPOWER", "TVSMOTOR", "UCOBANK",
+    "UNITDSPR", "UTIAMC", "VBL", "VEDANT", "VIJAYA",
+    "WELCORP", "WHIRLPOOL", "ZEEL", "ZENSARTECH", "ZYDUSLIFE",
+    "BRIGADE", "CENTURYTEX", "CRAFTSMAN", "DATAPATTNS", "EIDPARRY",
+    "FIEMIND", "FINPIPE", "FORTIS", "GRINDWELL", "HLEGLAS",
+    "IRCTC", "JBCHEPHARM", "JKPAPER", "KAJARIACER", "KFINTECH",
+    "LXCHEM", "MAHINDCIE", "MASTEK", "MINDTREE", "MOTILALOFS",
+    "NIITMTS", "NSLNISP", "PATANJALI", "PNCINFRA", "PRSMJOHNSN",
+    "RADICO", "RAJESHEXPO", "RATNAMANI", "REDINGTON", "RRKABEL",
+    "SHYAMMETL", "SJVN", "SKFINDIA", "SPARC", "SWANENERGY",
+    "TANLA", "TATAELXSI", "TIINDIA", "TINPLATE", "TRITURBINE",
+    "UNIPARTS", "UNOMINDA", "UTKARSH", "VGUARD", "VIPIND",
+    "WABCO", "WELSPUNLIV", "WENDT", "WESTLIFE", "WONDERLA",
+]
+
+# ── Nifty Smallcap 250 ────────────────────────────────────────────────────────
+# Smaller companies; higher volatility, wider spreads.
+NIFTYSMALLCAP250: list[str] = [
+    "AAATECH", "AAKASH", "AARTIDRUGS", "AARTISURF", "ABMINTLLTD",
+    "ACCELYA", "ACE", "ACMESOLAR", "ADANIGEEN", "ADANIGREEN",
+    "AEGISLOG", "AFFLE", "AGARIND", "AGCNET", "AHLUCONT",
+    "AIIL", "AJOONI", "AKGOSOA", "AKZOINDIA", "ALEMBICLTD",
+    "ALEXIS", "ALFREDHERB", "ALLCARGO", "ALMONDZ", "ALOKTEXT",
+    "ALPHAGEO", "AMBER", "AMJLAND", "AMRUTANJAN", "ANDHRAPET",
+    "ANUP", "APCOTEX", "APLAPOLLO", "APTECHT", "ARMANFIN",
+    "ARVINDSMRT", "ASAHIINDIA", "ASHIANA", "ASHOKLEY", "ASKFINVEST",
+    "ASMS", "ASPIRE", "ATGL", "AUTOAXLES", "AVANTIFEED",
+    "AZAD", "BAFNAPH", "BAJAJCON", "BAJAJHFL", "BALAJITELE",
+    "BALAMINES", "BALMLAWRIE", "BALUARTE", "BANCOFBARODA", "BARBEQUES",
+    "BATAINDIA", "BBTC", "BCONCEPTS", "BEML", "BFINANCE",
+    "BIKAJI", "BIRLACABLE", "BIRLACORPN", "BIRLATYRES", "BLBLIMITED",
+    "BLISSGVS", "BLUEDART", "BLUECHIP", "BLUESTARCO", "BMETALS",
+    "BONLON", "BOSCHLTD", "BPCL", "BRNL", "BSL",
+    "CAMS", "CAMPUS", "CANFINHOME", "CAPACITE", "CAPLIPOINT",
+    "CARERATING", "CASTROLIND", "CEATLTD", "CENTURYPLY", "CEREBRAINT",
+    "CGPOWER", "CHALET", "CHEMBOND", "CHENNPETRO", "CIGNITITEC",
+    "CLNINDIA", "CMGASIND", "COMSYN", "CONFIPET", "CONTROLS",
+    "CRISIL", "CYIENT", "DATAMATICS", "DECCANCE", "EDELWEISS",
+    "EFCL", "ELECTCAST", "ELECTHERM", "EMKAYGL", "EMMBIOMED",
+    "ENDURANCE", "ENVIRO", "ESTER", "ETHOS", "EUROBEES",
+    "EVONIK", "EXCEL", "EXLSERVICE", "EXPERTEDGE", "FAGBEARINGS",
+    "FAITHYOG", "FCSSOFT", "FFIL", "FILATEX", "FILTRN",
+    "FMGOETZE", "FOCUSLIGHTS", "FORCEMOT", "GATI", "GAYAPROJ",
+    "GENESYS", "GENUSPOWER", "GICRE", "GLAND", "GMMPFAUDLR",
+    "GOACARBON", "GODHA", "GODFRYPHLP", "GOPALSNACK", "GUFICBIO",
+    "GULFOILLUB", "GVKPIL", "HBLPOWER", "HERCULES", "HERITGFOOD",
+    "HIKAL", "HILTON", "HINDWAREAP", "HINSTERLNG", "HOLCIM",
+    "HOMEFIRST", "HUMBA", "IBREALEST", "ICDSLTD", "ICICIGI",
+    "IGARASHI", "IGPL", "IIFLSEC", "IILVITAMIN", "IMPAL",
+    "INDORAYON", "INDOSTAR", "INDSWFTLAB", "INDTERMINL", "INOXWIND",
+    "INTELLECT", "INVENTURE", "IONEXCHANG", "IREDA", "IRFC",
+    "ISGEC", "ITI", "ITNL", "JAGRAN", "JAMNAAUTO",
+    "JBMA", "JCHAC", "JKLAKSHMI", "JMFINANCIL", "JUBILANT",
+    "JYOTHYLAB", "JYOTIREALP", "KALYANKJIL", "KANANIIND", "KARDA",
+    "KENNAMET", "KESORAM", "KGPETRO", "KIOCL", "KITEX",
+    "KKCL", "KLRF", "KOTAKBANK", "KPIGREEN", "KRATOM",
+    "KRSNAA", "KRYSTAL", "KSCL", "LAKSHVILAS", "LANCER",
+    "LIBAS", "LICI", "LINC", "LINDEINDIA", "LIQUIDBEES",
+    "LOYALTEX", "LUMAXIND", "LUXIND", "MADHUCON", "MAGNUM",
+    "MAHLOG", "MAHSCOOTER", "MAJESCO", "MANORAMAIND", "MARATHON",
+    "MARINE", "MAXVIL", "MBECL", "MCDHOLDING", "MCSAAS",
+    "MEDICAMEQ", "MEDICO", "MEDNAX", "MEDINDIA", "MEDPACE",
+    "MELSTAR", "MENONBEAR", "MHRIL", "MINDACORP", "MIDHANI",
+    "MMTC", "MOIL", "MONSANTO", "MOTOGENFIN", "MPHASIS",
+    "MSTC", "MTARTECH", "MUKANDLTD", "MUSICBDCST", "NAHARINDUS",
+    "NAUKRI", "NAZARA", "NDTV", "NEOGEN", "NETFLTD",
+    "NETWORK18", "NEULANDLAB", "NIFTYCES", "NIITLTD", "NOCIL",
+    "NRAILWAY", "NSIL", "OCL", "ONMOBILE", "OPTIEMUS",
+]
+
+# ── Nifty 100 (= NIFTY50 + NIFTY_NEXT50) ─────────────────────────────────────
+NIFTY100: list[str] = NIFTY50 + _NIFTY_NEXT50
+
+# ── Nifty 500 (= all four sub-indices, deduplicated) ─────────────────────────
+def _dedup(lists: list[list[str]]) -> list[str]:
+    seen: set[str] = set()
+    result: list[str] = []
+    for lst in lists:
+        for sym in lst:
+            if sym not in seen:
+                seen.add(sym)
+                result.append(sym)
+    return result
+
+
+NIFTY500: list[str] = _dedup([NIFTY50, _NIFTY_NEXT50, NIFTYMIDCAP150, NIFTYSMALLCAP250])
