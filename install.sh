@@ -34,6 +34,7 @@ declare -A MODULE_FILES=(
   [mf]="mutual-fund-advisor.md"
   [policy]="policy-impact-analyzer.md"
   [portfolio]="portfolio-builder.md"
+  [momentum]="momentum-sage.md"
   [us-stock]="us-stock-analyzer.md"
   [us-fund]="us-fund-advisor.md"
 )
@@ -43,6 +44,7 @@ declare -A MODULE_LABELS=(
   [mf]="Fund Advisor (IN)      (Indian: funds, ETFs, SIP, international)           — ~500 lines"
   [policy]="Policy Analyzer (IN) (Indian: budget, RBI, PLI, macro impact)            — ~270 lines"
   [portfolio]="Portfolio Builder (IN)(Indian: asset allocation, review, tax, income)   — ~520 lines"
+  [momentum]="Momentum Sage (IN)   (Indian: Stage Analysis, SEPA, RS Rating, breadth, sector RRG, 3M-1Y swing) — ~430 lines"
   [us-stock]="US Stock Analyzer    (US: NYSE/NASDAQ stocks, SEC, sector frameworks)   — ~600 lines"
   [us-fund]="US Fund Advisor      (US: ETFs, MFs, 401k/IRA, 3-fund strategy)          — ~500 lines"
 )
@@ -97,7 +99,7 @@ if [ "$INSTALL_MODE" = "interactive" ]; then
   echo ""
   echo "Available modules:"
   echo ""
-  for key in stock forensic mf policy portfolio us-stock us-fund; do
+  for key in stock forensic mf policy portfolio momentum us-stock us-fund; do
     echo "  [$key] ${MODULE_LABELS[$key]}"
   done
   echo ""
@@ -134,8 +136,8 @@ if [ "$INSTALL_MODE" = "interactive" ]; then
       INSTALL_MODE="all" ;;
     6)
       echo ""
-      echo "Enter module names separated by spaces (stock forensic mf policy portfolio us-stock us-fund):"
-      echo "NOTE: For Indian stocks, policy is strongly recommended. forensic adds earnings quality screen."
+      echo "Enter module names separated by spaces (stock forensic mf policy portfolio momentum us-stock us-fund):"
+      echo "NOTE: For Indian stocks, policy is strongly recommended. forensic adds earnings quality screen; momentum adds 3M-1Y swing-trade analysis."
       read -rp "> " custom_input
       IFS=' ' read -ra SELECTED_MODULES <<< "$custom_input"
       INSTALL_MODE="manual" ;;
@@ -150,7 +152,7 @@ FILES_TO_INSTALL=("$CORE_FILE")
 TOTAL_LINES=299  # core file lines
 
 if [ "$INSTALL_MODE" = "all" ]; then
-  for key in stock forensic mf policy portfolio us-stock us-fund; do
+  for key in stock forensic mf policy portfolio momentum us-stock us-fund; do
     FILES_TO_INSTALL+=("${MODULE_FILES[$key]}")
   done
   TOTAL_LINES=4000
@@ -264,6 +266,7 @@ Read the core skill file first, then load the relevant companion file(s). Do not
 - Indian mutual fund / SIP / ETF / NAV → `~/.claude/skills/mutual-fund-advisor.md`
 - Indian portfolio construction / review / rebalancing → `~/.claude/skills/portfolio-builder.md`
 - Indian budget / RBI / PLI / SEBI / macro impact → `~/.claude/skills/policy-impact-analyzer.md`
+- Momentum / swing trade / Stage Analysis / SEPA / RS Rating / market breadth / sector rotation / breakout setup (3M-1Y) → `~/.claude/skills/momentum-sage.md` (also read stock-analyzer.md for the fundamental gate)
 
 **For US market queries:**
 - US stock / equity / IPO / governance / sector analysis → `~/.claude/skills/us-stock-analyzer.md`
@@ -335,6 +338,16 @@ Invoke via \`uv run --project ~/.claude/market-sage-tools <tool> [args]\`.
 | ms-dcf | \`ms-dcf --symbol X --price P --fcf F --growth G [--shares S] [--eps E] [--book B] [--pe-fair PE] [--pretty]\` | DCF, Graham Number, PE-based, Reverse DCF (India defaults: --discount 13 --terminal 5) |
 | ms-nav | \`ms-nav QUERY [--scheme-code CODE] [--list-matches] [--pretty]\` | AMFI NAV lookup by fund name or scheme code |
 | ms-forensic | \`ms-forensic SYMBOL [--years 5] [--standalone] [--pretty]\` | Forensic screen: DSO divergence, DIO-margin decoupling, CWIP aging, CFO/PAT (O'Glove), DPO inflation — preliminary MRS |
+
+### Indian Momentum Tools (momentum-sage)
+| Tool | Invocation | What it does |
+|------|-----------|--------------|
+| ms-momentum-score | \`ms-momentum-score SYMBOL [SYMBOL ...] [--exclude-last 21] [--pretty]\` | 1M/3M/6M/12M/12-1M returns, annualised vol, volatility-adjusted momentum |
+| ms-rs-rank | \`ms-rs-rank SYMBOL [--vs NIFTY500] [--pretty]\` | IBD-style RS Rating (1-99 percentile) + Mansfield RS vs Nifty 50 |
+| ms-breadth | \`ms-breadth [--index NIFTY500] [--pretty]\` | Market breadth go/no-go: % above 200/50 DMA, A/D ratio, 52W H/L, regime |
+| ms-sector-rs | \`ms-sector-rs [--period 63] [--pretty]\` | Sector RS vs Nifty 50 + RRG quadrants (Leading/Improving/Weakening/Lagging) |
+| ms-volume-profile | \`ms-volume-profile SYMBOL [--period 6mo] [--pretty]\` | OBV (+divergence), CMF, RVOL, 52W anchored VWAP, NR7/NR4, volume verdict |
+| ms-momentum-screen | \`ms-momentum-screen [--index NIFTYMIDCAP150] [--symbols ...] [--min-score 65] [--portfolio 500000] [--pretty]\` | Orchestrator: 100-pt composite (momentum/SEPA/ADX/volume/fundamental gate), entry setup, ATR position size — ranked buy-list |
 
 ### US Market Tools
 | Tool | Invocation | What it does |
