@@ -258,7 +258,7 @@ The skill auto-detects which market is relevant from your query:
 
 ## Updating Tools
 
-If you pull new changes to this repo, re-sync the installed tools:
+If you pull new changes to this repo, re-sync the installed tools by running both commands in sequence:
 
 ```bash
 cp -r tools/. ~/.claude/market-sage-tools/
