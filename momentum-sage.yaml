@@ -1,0 +1,55 @@
+name: momentum-sage
+version: 1.0.0
+description: |
+  High-quality momentum analyzer for NSE/BSE equities targeting 3-month to 1-year
+  swing trades. Combines Stan Weinstein Stage Analysis, Mark Minervini SEPA Template,
+  Gary Antonacci Dual Momentum, CAN SLIM filtering, IBD RS Rating, and India-specific
+  signals (Delivery%, FII/DII flow, F&O ban). Strict live-data-only mandate —
+  training knowledge is never used for any price, ratio, or indicator value.
+
+triggers:
+  - momentum stock
+  - momentum analysis
+  - momentum screen
+  - momentum score
+  - swing trade setup
+  - swing trade entry
+  - stage analysis
+  - stage 2 stocks
+  - SEPA template
+  - Minervini
+  - CAN SLIM
+  - breakout stock
+  - high RS stocks
+  - RS rating
+  - relative strength rank
+  - market breadth
+  - sector rotation
+  - delivery percentage
+  - FII DII momentum
+  - dual momentum
+  - IBD stocks
+  - leading sectors
+  - volatility contraction
+  - NR7 setup
+  - go no go market
+
+instructions_file: momentum-sage.md
+
+tools:
+  - ms-breadth
+  - ms-sector-rs
+  - ms-screener
+  - ms-forensic
+  - ms-technicals
+  - ms-quotes
+  - ms-momentum-score
+  - ms-rs-rank
+  - ms-volume-profile
+  - ms-momentum-screen
+
+metadata:
+  parent_skill: market-sage
+  horizon: 3M–1Y swing trade
+  markets: NSE, BSE (Indian equities)
+  phase2_markets: NYSE, NASDAQ (future)
